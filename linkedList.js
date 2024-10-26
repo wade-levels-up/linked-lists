@@ -76,11 +76,15 @@ export default class LinkedList {
   find = function (value) {
     let position = 0;
     let node = this.head;
-    while (node && node.data !== value) {
-      position += 1;
-      node = node.next;
+    while (node) {
+      if (node.data !== value) {
+        position += 1;
+        node = node.next;
+      } else {
+        return position;
+      }
     }
-    return position;
+    return null;
   };
 
   toString = function () {
@@ -92,5 +96,39 @@ export default class LinkedList {
     }
     string += `null`;
     return string;
+  };
+
+  insertAt = function (value, index) {
+    let newNode = new Node(value);
+    let position = 0;
+    let node = this.head;
+    while (node.next) {
+      if (position === index - 1) {
+        newNode.next = node.next;
+        node.next = newNode;
+        break;
+      } else {
+        position += 1;
+        node = node.next;
+      }
+    }
+  };
+
+  removeAt = function (index) {
+    let position = 0;
+    let node = this.head;
+    while (node.next) {
+      if (position === index && position === 0) {
+        this.head = node.next;
+        break;
+      }
+      if (position === index - 1) {
+        node.next = node.next.next;
+        break;
+      } else {
+        position += 1;
+        node = node.next;
+      }
+    }
   };
 }
